@@ -1,32 +1,54 @@
 <h5 class="display-5">Forms template:</h5>
-<form (ngSubmit)="saveData(myForm)" #myForm="ngForm">
+<form (ngSubmit)="saveData(myForm)" #myForm="ngForm" class="needs-validation">
   <div class="form-group">
     <label for="name">Name</label>
-    <input type="text" class="form-control" id="name" placeholder="Name" name="name" 
-    [(ngModel)]="user.name"
-    required>
+    <input #name="ngModel" type="text" class="form-control" id="name" placeholder="Name" name="name" 
+    [(ngModel)]="user.name" minlength="5" required
+    [ngClass]="{'is-invalid': name.errors?.required && name.touched || name.errors?.minlength,
+    'is-valid': name.valid}">
+    <div *ngIf="name?.errors?.required" class="invalid-feedback">
+      Please provide a name.
+    </div>
+    <div *ngIf="name?.errors?.minlength" class="invalid-feedback">
+      At least {{ name?.errors.minlength.requiredLength }} characters.
+    </div>
   </div>
 
   <div class="form-group">
     <label for="lastname">Lastname</label>
-    <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Lastname" 
-    [(ngModel)]="user.lastname"
-    required>
+    <input #lastname="ngModel" type="text" class="form-control" id="lastname" name="lastname" placeholder="Lastname" 
+    [(ngModel)]="user.lastname" minlength="8" required
+    [ngClass]="{'is-invalid': lastname.errors?.required && lastname.touched || lastname.errors?.minlength,
+    'is-valid': lastname.valid}">
+    <div *ngIf="lastname?.errors?.required" class="invalid-feedback">
+      Please give us a lastname
+    </div>
+    <div *ngIf="lastname?.errors?.minlength" class="invalid-feedback">
+      At least write {{ lastname?.errors.minlength.requiredLength }} letters.
+    </div>
   </div>
 
   <div class="form-group">
     <label for="email">Email address</label>
-    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email"
+    <input #email="ngModel" type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email"
     name="email" 
     [(ngModel)]="user.email"
-    required>
+    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required
+    [ngClass]="{'is-invalid': email.errors?.required && email.touched || email.errors?.pattern,
+    'is-valid': email.valid}">
     <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    <div *ngIf="email?.errors?.required" class="invalid-feedback">
+      Please give us an email.
+    </div>
+    <div *ngIf="email?.errors?.pattern" class="invalid-feedback">
+      Your email does not match.
+    </div>
   </div>
   <!-- <div class="form-group form-check">
     <input type="checkbox" class="form-check-input" id="exampleCheck1">
     <label class="form-check-label" for="exampleCheck1">Check me out</label>
   </div> -->
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <button [disabled]="!myForm.valid" type="submit" class="btn btn-primary" >Submit</button>
 </form>
 <p>
   {{user | json}}

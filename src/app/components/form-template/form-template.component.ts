@@ -8,19 +8,17 @@ import { NgForm } from '@angular/forms';
 })
 export class FormTemplateComponent {
   user: { name: string, lastname: string, email:string } = {
-    name: '',
-    lastname: '',
-    email: ''
+    name: null,
+    lastname: null,
+    email: null
   };
   constructor() { }
 
   saveData(myForm: NgForm) {
     console.log('form was saved');
-    console.log(myForm);
-    console.log('only values inputs');
-    console.log(myForm.value);
-    console.log('user object');
-    console.log(this.user);
+    console.log('ngForm object', myForm);
+    console.log('only values object', myForm.value);
+    // console.log(this.user);
   }
 
 }
