@@ -44,12 +44,32 @@
       Your email does not match.
     </div>
   </div>
-  <!-- <div class="form-group form-check">
-    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-    <label class="form-check-label" for="exampleCheck1">Check me out</label>
-  </div> -->
+
+  <div class="form-group">
+    <label for="country">Select a country</label>
+    <select name="country" class="custom-select" [(ngModel)]="user.countryCode">
+      <option value="" disabled selected>Open this select menu</option>
+      <option *ngFor="let country of countries" [ngValue]="country.id">{{ country.name }}</option>
+    </select>
+  </div>
+  
+  <div class="form-group">
+    <label>Genre</label>
+    <div *ngFor="let genre of genres; let i = index" class="custom-control custom-radio">
+      <input [(ngModel)]="user.genre" [value]="genre" type="radio" [id]="i" name="genre" class="custom-control-input">
+      <label class="custom-control-label" [for]="i">{{ genre }}</label>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="custom-control custom-checkbox">
+      <input [(ngModel)]="user.acceptance" name="acceptance" type="checkbox" class="custom-control-input" id="customCheck1">
+      <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
+    </div>
+  </div>
+
   <button [disabled]="!myForm.valid" type="submit" class="btn btn-primary" >Submit</button>
 </form>
-<p>
+<pre>
   {{user | json}}
-</p>
+</pre>
